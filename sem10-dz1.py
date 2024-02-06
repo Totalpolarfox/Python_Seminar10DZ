@@ -10,24 +10,39 @@ lst = ['robot'] * 10
 lst += ['human'] * 10
 random.shuffle(lst)
 data = pd.DataFrame({'whoAmI':lst})
+# print(data)
 
-# var.1
-lst_r = []
-lst_h = []
-for element in lst:
-    if element == 'robot':
-        lst_r.append(1)
-        lst_h.append(0)
-    else:
-        lst_h.append(1)
-        lst_r.append(0)
+# var.2
+onehot_data = data.copy(deep=True)
 
-if list[0] == 'robot':
-    md = {'robot': lst_r, 'human': lst_h}
-else:
-    md = {'human': lst_h, 'robot': lst_r}
-
-onehot_data = pd.DataFrame(md)
+onehot_data.loc[data['whoAmI'] == 'human', 'human'] = 1
+onehot_data.loc[data['whoAmI'] == 'human', 'robot'] = 0
+onehot_data.loc[data['whoAmI'] == 'robot', 'robot'] = 1
+onehot_data.loc[data['whoAmI'] == 'robot', 'human'] = 0
+onehot_data = onehot_data.astype({'human': int, 'robot': int})
+onehot_data = onehot_data[['human', 'robot']]
 print()
 print(onehot_data)
 print()
+
+
+# var.1
+# lst_r = []
+# lst_h = []
+# for element in lst:
+#     if element == 'robot':
+#         lst_r.append(1)
+#         lst_h.append(0)
+#     else:
+#         lst_h.append(1)
+#         lst_r.append(0)
+
+# if list[0] == 'robot':
+#     md = {'robot': lst_r, 'human': lst_h}
+# else:
+#     md = {'human': lst_h, 'robot': lst_r}
+
+# onehot_data = pd.DataFrame(md)
+# print()
+# print(onehot_data)
+# print()
